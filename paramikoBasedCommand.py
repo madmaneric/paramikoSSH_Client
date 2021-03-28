@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # A little work for madmaneric
 import paramiko
-import sys
 import re
 import socket
 from getpass import getpass
@@ -46,16 +45,18 @@ if __name__ == "__main__":
     devicePassword = getpass('Input the device Password:')
     try:
         logFile = open('logfile', 'a')
-        deviceFailed=[]
+        deviceFailed = []
         for ip in deviceList:
             deviceSSHshell = paramiko.SSHClient()
             deviceSSHshell.set_missing_host_key_policy(paramiko.AutoAddPolicy)
-            deviceSSHshell.connect(hostname=ip, username=deviceUserName,password=devicePassword,look_for_keys=False)
+            deviceSSHshell.connect(hostname=ip, username=deviceUserName, password=devicePassword, look_for_keys=False)
             deviceShell = deviceSSHshell.invoke_shell()
+            print(ip+' starting')
             for command in commandLines:
                 deviceShell.send(command)
-                sleep(1)
+                sleep(0.5)
                 output = deviceShell.recv(65535).decode('ASCII')
+                print('sending ' + command)
                 logFile.write(output)
     except socket.error:
         print(ip+' connection Error,check if ssh server has been enabled in device or the network')
