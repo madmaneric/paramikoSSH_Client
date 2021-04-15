@@ -1,5 +1,6 @@
 # paramikoSSH_Client
 基于paramiko端批量刷入设备命令<br>
+paramikoCommandMT为多线程版本，所有设备同时刷入<br>
 建议使用python 3.6或3.8版本<br>
 需要通过pip3 安装paramiko库<br>
 centos下环境初始化<br>
